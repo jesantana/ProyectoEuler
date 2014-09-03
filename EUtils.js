@@ -1,4 +1,4 @@
-var String=new Object();
+var String=function(){;}
 
 String.prototype.isPalindrom=function(str)
 {
