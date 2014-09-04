@@ -14,6 +14,10 @@ var ConjuntoCandidatos=function()
 	{
 		this.factorDerecho=y;
 		this.producto=prod;
+		
+		this.print=function(leftOper){
+			return leftOper+"*"+this.factorDerecho+"="+this.producto;
+		}
 	}
 	
 	this.init=function(n)
@@ -37,29 +41,25 @@ var ConjuntoCandidatos=function()
 	
 	this.hallaCandidatoConMayorProducto=function()
 	{
-		console.log("hallaCandidatoConMayorProducto");
 		var maxProducto=0;
 		var indiceDeMaxProd=-1;
 		
 		for(var indiceActual in this.candidatos)
 		{
-			console.log("indiceActual "+indiceActual);
-			console.log("this.candidatos "+this.candidatos);
 			if(this.candidatos[indiceActual].producto>maxProducto)
 			{
-				maxProducto=this.candidatos[indiceActual];
+				maxProducto=this.candidatos[indiceActual].producto;
 				indiceDeMaxProd=indiceActual;
 			}
 		}
-		console.log("hallaCandidatoConMayorProducto 2");
+		
 		if(this.candidatos[indiceDeMaxProd].producto<Math.pow(this.mayorNumeroAInsertar,2))
 		{
 			console.log("Es menor que el mayor numero a insertar 2");
 			indiceDeMaxProd=this.mayorNumeroAInsertar;
 			this.crearProximoCandidato();
 		}
-		console.log("hallaCandidatoConMayorProducto 3 "+indiceDeMaxProd+" this.candidatos[this.indiceDeMaxProd] "+this.candidatos[indiceDeMaxProd]);
-		
+		this.printCurrent();
 		return new Candidato(indiceDeMaxProd,this.candidatos[indiceDeMaxProd].factorDerecho,this.candidatos[indiceDeMaxProd].producto);
 	}
 	
@@ -75,6 +75,17 @@ var ConjuntoCandidatos=function()
 				this.candidatos.splice(candidato.x,1);
 			}
 	}
+	
+	this.printCurrent=function()
+	{
+		var all="CURRENT STATE-->";
+		for(var indiceActual in this.candidatos)
+		{
+			all=all+this.candidatos[indiceActual].print(indiceActual)+"---";
+		}
+		
+		console.log(all);
+	}
 
 }
 
@@ -85,7 +96,7 @@ function biggestPalindrom2(n)
 	var stringInstance=new String();
 	candidatos.init(n);
 	
-	while(candidatos .existenCandidatos() && palindrome===undefined){
+	while(candidatos.existenCandidatos() && palindrome===undefined){
 		var candidatoMayorProd=candidatos.hallaCandidatoConMayorProducto();
 		console.log("Candidato escogido "+candidatoMayorProd.producto +"  "+candidatoMayorProd.x +"  "+candidatoMayorProd.y );
 		if(!stringInstance.isPalindrom(candidatoMayorProd.producto.toString()))
